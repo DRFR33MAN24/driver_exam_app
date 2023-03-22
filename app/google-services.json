@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "53635403019",
+    "project_id": "elalamiye-5de23",
+    "storage_bucket": "elalamiye-5de23.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53635403019:android:0a9b59af31f173cf2aa60e",
+        "android_client_info": {
+          "package_name": "watanplatform.elalamiye"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "53635403019-6vol1ppvb8101lp1qj03rqo5pj2d1hug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "watanplatform.elalamiye",
+            "certificate_hash": "792a783f908fffdf36c02dc44b3134aab0171c30"
+          }
+        },
+        {
+          "client_id": "53635403019-91m18cbpj0vmcc9fi77aqb0e2tjn9jot.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC0uZQs9AYLtxl36paS1bS4Q3H8hSo5FE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "53635403019-91m18cbpj0vmcc9fi77aqb0e2tjn9jot.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
