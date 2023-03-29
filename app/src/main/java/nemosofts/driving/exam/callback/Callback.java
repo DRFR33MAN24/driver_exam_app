@@ -39,6 +39,9 @@ public class Callback implements Serializable {
     public static final String METHOD_VID = "get_video_list";
     public static final String METHOD_VID_ID = "get_video_by";
 
+    public static final String METHOD_Q_CAT = "get_q_cat_list";
+    public static final String METHOD_Q_CAT_ID = "get_q_cat_by";
+
 
     public static Boolean isDarkMode = false, isProfileUpdate = false;
     public static int isDarkModeTheme = 0;
@@ -85,5 +88,8 @@ public class Callback implements Serializable {
     public static final String TAG_VID_TITLE = "video_title";
     public static final String TAG_VID_URL = "video_url";
     public static final String TAG_VID_IMAGE = "video_image";
+
+    public static final String TAG_Q_CAT_ID = "q_cat_id";
+    public static final String TAG_Q_CAT_NAME = "q_cat_name";
 
 }

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import nemosofts.driving.exam.item.ItemCat;
 import nemosofts.driving.exam.item.ItemLanguage;
+import nemosofts.driving.exam.item.ItemQuestionsCat;
 import nemosofts.driving.exam.item.ItemResult;
 import nemosofts.driving.exam.item.ItemVideo;
 
@@ -39,6 +40,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TAG_VID_URL = "url";
     private static final String TAG_VID_IMG = "vimg";
 
+    private static final String TABLE_Q_CAT = "q_cat_id";
+    private static final String TAG_Q_CAT_ID = "qcid";
+    private static final String TAG_Q_CAT_NAME = "name";
+
     public static final String TABLE_RESULT = "result";
     private static final String TAG_DATE = "date";
     private static final String TAG_TIME = "time";
@@ -47,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private final String[] columns_lan = new String[]{TAG_ID, TAG_LAN_ID, TAG_LAN_NAME};
     private final String[] columns_cat = new String[]{TAG_ID, TAG_CAT_ID, TAG_CAT_NAME, TAG_CAT_IMG};
     private final String[] columns_vid = new String[]{TAG_ID, TAG_VID_ID, TAG_VID_TITLE,TAG_VID_URL, TAG_VID_IMG};
+    private final String[] columns_q_cat = new String[]{TAG_ID, TAG_Q_CAT_ID,TAG_Q_CAT_NAME};
     private final String[] columns_result = new String[]{TAG_ID, TAG_DATE, TAG_TIME, TAG_RESULT};
 
     // Creating table query
@@ -70,6 +76,12 @@ public class DBHelper extends SQLiteOpenHelper {
             TAG_VID_URL + " TEXT," +
             TAG_VID_IMG + " TEXT);";
 
+    private static final String CREATE_TABLE_Q_CAT = "create table " + TABLE_Q_CAT+ "(" +
+            TAG_ID + " integer PRIMARY KEY AUTOINCREMENT," +
+            TAG_Q_CAT_ID + " TEXT," +
+
+            TAG_Q_CAT_NAME + " TEXT);";
+
     // Creating table query
     private static final String CREATE_TABLE_RESULT = "create table " + TABLE_RESULT + "(" +
             TAG_ID + " integer PRIMARY KEY AUTOINCREMENT," +
@@ -89,6 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(CREATE_TABLE_LAN);
             db.execSQL(CREATE_TABLE_CAT);
             db.execSQL(CREATE_TABLE_VID);
+            db.execSQL(CREATE_TABLE_Q_CAT);
             db.execSQL(CREATE_TABLE_RESULT);
         } catch (Exception e) {
             e.printStackTrace();
@@ -183,6 +196,29 @@ public class DBHelper extends SQLiteOpenHelper {
         return arrayList;
     }
 
+    @SuppressLint("Range")
+    public ArrayList<ItemQuestionsCat> getQCat() {
+        ArrayList<ItemQuestionsCat> arrayList = new ArrayList<>();
+
+        Cursor cursor = db.query(TABLE_Q_CAT, columns_q_cat, null, null, null, null, TAG_ID + " ASC");
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            for (int i = 0; i < cursor.getCount(); i++) {
+
+
+                String id = cursor.getString(cursor.getColumnIndex(TAG_Q_CAT_ID));
+                String name = cursor.getString(cursor.getColumnIndex(TAG_Q_CAT_NAME)).replace("%27", "'");
+
+                ItemQuestionsCat itemQuestionsCat = new ItemQuestionsCat(id, name);
+                arrayList.add(itemQuestionsCat);
+
+                cursor.moveToNext();
+            }
+            cursor.close();
+        }
+        return arrayList;
+    }
+
     public void addedLanguageList(@NonNull ItemLanguage itemLanguage) {
         String name = itemLanguage.getName().replace("'", "%27");
 
@@ -221,6 +257,20 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TABLE_VID, null, contentValues);
     }
 
+    public void addedQCatList(@NonNull ItemQuestionsCat itemQuestionsCat) {
+
+
+        String name = itemQuestionsCat.getTitle().replace("'", "%27");
+
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TAG_VID_ID, itemQuestionsCat.getId());
+        contentValues.put(TAG_VID_TITLE, name);
+
+
+        db.insert(TABLE_VID, null, contentValues);
+    }
+
     public void addedResult(String date, String time, String result) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(TAG_DATE, date);
@@ -240,6 +290,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void removeAllVid() {
         db.delete(TABLE_VID, null, null);
+    }
+
+    public void removeAllQCat() {
+        db.delete(TABLE_Q_CAT, null, null);
     }
 
     public void removeAllResult() {

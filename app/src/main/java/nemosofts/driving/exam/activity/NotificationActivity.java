@@ -130,7 +130,7 @@ public class NotificationActivity extends ProCompatActivity {
                         setEmpty();
                     }
                 }
-            }, helper.callAPI(Callback.METHOD_NOTIFICATION, page, "", "", "","", "", sharedPref.getUserId(), "", "", "", "", "", "", "", null));
+            }, helper.callAPI(Callback.METHOD_NOTIFICATION, page, "", "", "","", sharedPref.getUserId(), "", "", "", "", "", "", "","", null));
             loadNotification.execute();
         } else {
             error_msg = getString(R.string.error_internet_not_connected);
