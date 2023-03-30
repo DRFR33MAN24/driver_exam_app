@@ -657,6 +657,8 @@ public class Helper {
             jsObj.addProperty("page", String.valueOf(page));
         } else if (Callback.METHOD_QUIZ.equals(helper_name)){
             jsObj.addProperty("lan_id", itemID);
+            jsObj.addProperty("searchText", searchText);
+            jsObj.addProperty("catID", catID);
         }
 
         switch (helper_name) {

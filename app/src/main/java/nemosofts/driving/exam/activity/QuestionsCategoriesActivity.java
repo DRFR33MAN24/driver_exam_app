@@ -56,7 +56,7 @@ public class QuestionsCategoriesActivity extends ProCompatActivity {
     private FrameLayout frameLayout;
     private String error_msg;
     private FloatingActionButton fab;
-
+    private String mode = "questions";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,17 +67,25 @@ public class QuestionsCategoriesActivity extends ProCompatActivity {
         dbHelper = new DBHelper(this);
         helper = new Helper(this);
 
-        helper = new Helper(this, (position, type) -> {
-            Intent intent = new Intent(QuestionsCategoriesActivity.this, PlayerActivity.class);
-            intent.putExtra("q_cat_id", arrayList.get(position).getId());
-            intent.putExtra("name", arrayList.get(position).getName());
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            this.mode = extras.getString("key");
 
-//            if (arrayList.get(position).getUrl() !=null){
-//                startActivity(intent);
-//            }
-//            else{
-//                Toast. makeText(getApplicationContext(),"Bad video url",Toast. LENGTH_SHORT);
-//            }
+            //The key argument here must match that used in the other activity
+        }
+        helper = new Helper(this, (position, type) -> {
+            if (mode =="questions"){
+                Intent intent = new Intent(QuestionsCategoriesActivity.this, QuizPaperActivity.class);
+                intent.putExtra("q_cat_id", arrayList.get(position).getId());
+                intent.putExtra("name", arrayList.get(position).getName());
+            }
+            else{
+                Intent intent = new Intent(QuestionsCategoriesActivity.this, QuizDetails.class);
+                intent.putExtra("q_cat_id", arrayList.get(position).getId());
+                intent.putExtra("name", arrayList.get(position).getName());
+            }
+
+
 
         });
 

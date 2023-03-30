@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
 import nemosofts.driving.exam.ProCompatActivity;
 
 import com.google.android.material.navigation.NavigationView;
@@ -101,11 +103,28 @@ public class MainActivity extends ProCompatActivity implements NavigationView.On
         changeLoginName();
         loadAboutData();
 
-        findViewById(R.id.ll_signs).setOnClickListener(view -> helper.showInter(0,"cat"));
-        findViewById(R.id.ll_exam).setOnClickListener(view -> helper.showInter(0,"quiz"));
-        findViewById(R.id.btn_result).setOnClickListener(view -> helper.showInter(0,"old_result"));
-        findViewById(R.id.ll_questions).setOnClickListener(view -> helper.showInter(0,"quiz_paper"));
-        findViewById(R.id.ll_videos).setOnClickListener(view -> helper.showInter(0,"videos"));
+
+        findViewById(R.id.ll_signs).setOnClickListener(view -> helper.showInter(0, "cat"));
+        // findViewById(R.id.ll_exam).setOnClickListener(view -> helper.showInter(0,"quiz"));
+
+
+        findViewById(R.id.ll_exam).setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, QuestionsCategoriesActivity.class);
+            i.putExtra("key", "quiz");
+
+            startActivity(i);
+        });
+        findViewById(R.id.btn_result).setOnClickListener(view -> helper.showInter(0, "old_result"));
+        //findViewById(R.id.ll_questions).setOnClickListener(view -> helper.showInter(0,"quiz_paper"));
+
+        findViewById(R.id.ll_questions).setOnClickListener(v -> {
+            Intent i = new Intent(MainActivity.this, QuestionsCategoriesActivity.class);
+            i.putExtra("key", "questions");
+
+            startActivity(i);
+        }
+        );
+        findViewById(R.id.ll_videos).setOnClickListener(view -> helper.showInter(0, "videos"));
 
         findViewById(R.id.iv_notifications).setOnClickListener(v -> startActivity(new Intent(MainActivity.this, NotificationActivity.class)));
 
@@ -133,6 +152,7 @@ public class MainActivity extends ProCompatActivity implements NavigationView.On
             }
         }
     }
+
     public void loadAboutData() {
         if (helper.isNetworkAvailable()) {
             LoadAbout loadAbout = new LoadAbout(MainActivity.this, new AboutListener() {
@@ -223,7 +243,7 @@ public class MainActivity extends ProCompatActivity implements NavigationView.On
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (reviewInfo != null){
+        } else if (reviewInfo != null) {
             Task<Void> flow = manager.launchReviewFlow(MainActivity.this, reviewInfo);
             flow.addOnCompleteListener(task1 -> new ExitDialog(this));
         } else {

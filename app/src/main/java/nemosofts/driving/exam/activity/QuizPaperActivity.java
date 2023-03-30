@@ -1,6 +1,7 @@
 package nemosofts.driving.exam.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,8 @@ public class QuizPaperActivity extends ProCompatActivity {
     private FrameLayout frameLayout;
     private String error_msg;
     private ProgressBar pb;
+    private String q_cat_id;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,10 @@ public class QuizPaperActivity extends ProCompatActivity {
 
         IsRTL.ifSupported(this);
         IsScreenshot.ifSupported(this);
+
+        Intent i = getIntent();
+        q_cat_id = i.getStringExtra("q_cat_id");
+        name = i.getStringExtra("name");
 
         helper = new Helper(this);
         sharedPref = new SharedPref(this);
@@ -114,7 +121,7 @@ public class QuizPaperActivity extends ProCompatActivity {
                         setEmpty();
                     }
                 }
-            }, helper.callAPI(Callback.METHOD_QUIZ, 0, String.valueOf(sharedPref.getLanguage()), "","","","","","","","","","","","",null));
+            }, helper.callAPI(Callback.METHOD_QUIZ, 0, String.valueOf(sharedPref.getLanguage()), q_cat_id,name,"","","","","","","","","","",null));
             loadQuiz.execute();
         } else {
             error_msg = getString(R.string.error_internet_not_connected);

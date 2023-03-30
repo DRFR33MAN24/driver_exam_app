@@ -61,6 +61,8 @@ public class QuizDetails extends ProCompatActivity {
     private String myPosition = "";
     private Boolean isFinish = false;
     private CountDownTimer countDownTimer;
+    private String q_cat_id;
+    private String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,9 @@ public class QuizDetails extends ProCompatActivity {
         IsRTL.ifSupported(this);
         IsScreenshot.ifSupported(this);
 
+        Intent i = getIntent();
+        q_cat_id = i.getStringExtra("q_cat_id");
+        name = i.getStringExtra("name");
         helper = new Helper(this);
         sharedPref = new SharedPref(this);
 
@@ -265,7 +270,7 @@ public class QuizDetails extends ProCompatActivity {
                         pb_details.setVisibility(View.GONE);
                     }
                 }
-            }, helper.callAPI(Callback.METHOD_QUIZ, 0, String.valueOf(sharedPref.getLanguage()),"", "","","","","","","","","","","",null));
+            }, helper.callAPI(Callback.METHOD_QUIZ, 0, String.valueOf(sharedPref.getLanguage()),q_cat_id, name,"","","","","","","","","","",null));
             loadQuiz.execute();
         } else {
             pb_details.setVisibility(View.GONE);
